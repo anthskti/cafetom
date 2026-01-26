@@ -22,9 +22,13 @@ export function FilterChips({ activeFilters, onToggle }: FilterChipsProps) {
           <button
             key={filter.id}
             onClick={() => onToggle(filter.id)}
-            className={`filter-chip flex items-center gap-2 ${
-              isActive ? "filter-chip-active" : ""
+            className={`flex items-center gap-2 
+                        px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+                        border
+                        ${ isActive ? "bg-primary text-primary-foreground border-primary hover:bg-primary/90" 
+                        : "border-primary/30 bg-background hover:bg-secondary hover:border-primary/30"
             }`}
+            // if isActive, primary green colour. 
           >
             {filter.icon}
             {filter.label}

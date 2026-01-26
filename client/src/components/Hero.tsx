@@ -7,8 +7,8 @@ interface HeroProps {
 
 export function Hero({ onSurpriseMe }: HeroProps) {
   return (
-    <section className="hero-gradient min-h-[70vh] flex flex-col items-center justify-center px-6 py-20 text-center">
-      <div className="max-w-3xl mx-auto animate-fade-in">
+    <section className="bg-[linear-gradient(135deg,hsl(var(--cream))_0%,hsl(var(--warm-beige))_50%,hsl(var(--sage-light)/0.3)_100%)] min-h-70vh flex flex-col items-center justify-center px-6 py-20 text-center">
+      <div className="p-8 max-w-3xl mx-auto animate-fade-in">
         <div className="flex items-center justify-center gap-2 mb-6">
           <Coffee className="w-6 h-6 text-primary" />
           <span className="text-sm font-medium tracking-widest uppercase text-muted-foreground">

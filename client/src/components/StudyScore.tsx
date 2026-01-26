@@ -13,7 +13,7 @@ export function StudyScore({ score, size = "md" }: StudyScoreProps) {
         <span
           key={i}
           className={`${dotSize} rounded-full transition-colors ${
-            i <= score ? "bg-primary" : "bg-border"
+            i <= score ? "bg-primary" : "bg-zinc-300"
           }`}
         />
       ))}

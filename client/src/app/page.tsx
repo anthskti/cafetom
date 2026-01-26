@@ -6,7 +6,6 @@ import { Hero } from "@/components/Hero";
 import { FilterChips, FilterType } from "@/components/FilterChips";
 import { CafeMap } from "@/components/CafeMap";
 import { CafeGrid } from "@/components/CafeGrid";
-import { Footer } from "@/components/Footer";
 import { toast } from "sonner";
 
 
@@ -52,7 +51,7 @@ export default function Home() {
     }, 100);
   }, [filteredCafes]);
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <Hero onSurpriseMe={handleSurpriseMe} />
 
@@ -90,9 +89,6 @@ export default function Home() {
           <CafeGrid cafes={filteredCafes} />
         </div>
       </section>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 }

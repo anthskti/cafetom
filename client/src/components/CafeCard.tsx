@@ -10,7 +10,7 @@ interface CafeCardProps {
 export function CafeCard({ cafe, index }: CafeCardProps) {
   return (
     <article
-      className="cafe-card opacity-0 animate-fade-in"
+      className="bg-card rounded-2xl overflow-hidden transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 animate-fade-in"
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <div className="aspect-4/3 overflow-hidden">
