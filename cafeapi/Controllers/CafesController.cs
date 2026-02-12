@@ -1,26 +1,32 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
+using cafeapi.Models;
+using cafeapi.Services;
+
 
 namespace cafeapi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
-
+[Route("api/[controller]")]
 public class CafesController : ControllerBase
 {
-    
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<CafeDto>>> GetCafes() {
-        var apiKey = "YOUR_GOOGLE_KEY";
-        var url = $"https://maps.googleapis.com/maps/api/place/textsearch/json?query=study+cafes+in+toronto&key={apiKey}";
-        
-        // 1. Fetch from Google Place
-        var response = await _httpClient.GetFromJsonAsync<GoogleResponse>(url);
-        
-        // 2. Map to your CafeDto (Logic for filtering study-specific vibes)
-        var cafes = response.Results.Select(r => new CafeDto(
-            Id: r.place_id,
-            Name: r.name
-        ));
+    private readonly GooglePlaceService _googleService;
+    public CafesController(GooglePlaceService googleService)
+    {
+        _googleService = googleService;
+    }
 
-        return Ok(cafes);
+    [HttpGet]
+    [OutputCache(PolicyName = "DailyUpdate")]
+    public async Task<ActionResult<List<CafeDto>>> GetCafes() {
+       try
+        {
+            var cafes = await _googleService.GetCafes();
+            return Ok(cafes);   
+        } 
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Google API Fetch Error.");
+        }
     }
 }
