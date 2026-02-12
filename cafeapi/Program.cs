@@ -2,7 +2,8 @@
 using cafeapi.Services;
 using dotenv.net;
 
-DotEnv.Load();
+var envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { envPath }));
 
 var builder = WebApplication.CreateBuilder(args);
 

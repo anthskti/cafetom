@@ -26,7 +26,7 @@ public class CafesController : ControllerBase
         } 
         catch (Exception ex)
         {
-            return StatusCode(500, "Google API Fetch Error.");
+            return StatusCode(500, new { error = ex.Message, type = ex.GetType().Name });
         }
     }
 }

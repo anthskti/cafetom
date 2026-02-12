@@ -1,1 +1,3 @@
 cafeapi/.env
+client/.env
+.vscode/*

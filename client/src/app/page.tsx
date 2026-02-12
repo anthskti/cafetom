@@ -9,6 +9,7 @@ import { CafeGrid } from "@/components/CafeGrid";
 import { toast } from "sonner";
 
 
+
 export default function Home() {
   const [activeFilters, setActiveFilters] = useState<FilterType[]>([]);
   const [selectedCafe, setSelectedCafe] = useState<Cafe | null>(null);

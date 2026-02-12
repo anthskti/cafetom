@@ -12,10 +12,11 @@ public class GooglePlaceService
     public GooglePlaceService(HttpClient httpClient, IConfiguration config)
     {
         _httpClient = httpClient;
-        _apiKey = config["GOOGlE_APIKEY"] ?? throw new ArgumentNullException("Google API Key is missing.");
+        _apiKey = config["GOOGLE_APIKEY"] ?? throw new ArgumentNullException("Google API Key is missing.");
     }
 
     public async Task<List<CafeDto>> GetCafes(){
+        // Console.WriteLine("Cache Tested at: " + DateTime.Now);
         // Preparing HTTP request to Googles API
         var request = new HttpRequestMessage(HttpMethod.Post, "https://places.googleapis.com/v1/places:searchText");
         request.Headers.Add("X-Goog-Api-Key", _apiKey);
