@@ -38,9 +38,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("NextjsPolicy");
+app.UseOutputCache();
 app.UseAuthorization();
 app.MapControllers();
-app.UseOutputCache();
-app.UseCors("NextjsPolicy");
 
 app.Run();

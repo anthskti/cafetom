@@ -25,10 +25,10 @@ export function CafeMap({ cafes, selectedCafe }: CafeMapProps) {
     mapTypeControl: false,         
     streetViewControl: false,      
     fullscreenControl: false,      
-    gestureHandling: "cooperative", // Better UX for long pages
+    gestureHandling: "cooperative", 
     restriction: {
       latLngBounds: {
-        north: 43.99, // Steeles Ave area
+        north: 43.80, // Aurora Ave area
         south: 43.58, // The Lake
         west: -79.64, // Mississauga border
         east: -79.12, // Scarborough border

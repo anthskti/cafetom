@@ -2,6 +2,8 @@ import { MapPin, Wifi, Volume2, Plug } from "lucide-react";
 import { cafeDTO } from "@/types/cafedto";
 import { StudyScore } from "./StudyScore";
 
+import { ImageProp } from "./ImageProp";
+
 interface CafeCardProps {
   cafe: cafeDTO;
   index: number;
@@ -14,10 +16,10 @@ export function CafeCard({ cafe, index }: CafeCardProps) {
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <div className="aspect-4/3 overflow-hidden">
-        <img
-          src={cafe.imageUrl}
+      
+        <ImageProp
+          source={cafe.imageUrl}
           alt={cafe.name}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
       </div>
       

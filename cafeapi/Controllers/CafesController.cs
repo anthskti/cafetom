@@ -11,9 +11,12 @@ namespace cafeapi.Controllers;
 public class CafesController : ControllerBase
 {
     private readonly GooglePlaceService _googleService;
-    public CafesController(GooglePlaceService googleService)
+    private readonly HttpClient _httpClient;
+    
+    public CafesController(GooglePlaceService googleService, HttpClient httpClient)
     {
         _googleService = googleService;
+        _httpClient = httpClient;
     }
 
     [HttpGet]
@@ -27,6 +30,33 @@ public class CafesController : ControllerBase
         catch (Exception ex)
         {
             return StatusCode(500, new { error = ex.Message, type = ex.GetType().Name });
+        }
+    }
+
+    [HttpGet("photo")]
+    public async Task<ActionResult> GetPhoto([FromQuery] string photoName)
+    {
+        if (string.IsNullOrEmpty(photoName))
+            return BadRequest("photoName is required");
+
+        try
+        {
+            var apiKey = Environment.GetEnvironmentVariable("GOOGLE_APIKEY") ?? 
+                        throw new InvalidOperationException("API key missing");
+            
+            var photoUrl = $"https://places.googleapis.com/v1/{photoName}/media?maxHeightPx=800&maxWidthPx=800&key={apiKey}";
+            
+            var response = await _httpClient.GetAsync(photoUrl);
+            response.EnsureSuccessStatusCode();
+            
+            var imageBytes = await response.Content.ReadAsByteArrayAsync();
+            var contentType = response.Content.Headers.ContentType?.MediaType ?? "image/jpeg";
+            
+            return File(imageBytes, contentType);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = "Failed to fetch photo", details = ex.Message });
         }
     }
 }

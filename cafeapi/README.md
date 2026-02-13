@@ -20,6 +20,7 @@ Services / GooglePlaceService.cs
 
 Controller / CafesController.cs
 - Our communication to the web, complete communication from URL to logics. 
+- Photo proxity endpoint sending photos to the frontend. CORS blockage. 
 
 Program.cs
 - Our main.py or index.js; the file that starts it all.
