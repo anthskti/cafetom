@@ -17,7 +17,7 @@ public class CafesController : ControllerBase
     }
 
     [HttpGet]
-    [OutputCache(PolicyName = "DailyUpdate")]
+    [OutputCache(PolicyName = "DailyCafes")]
     public async Task<ActionResult<List<CafeDto>>> GetCafes() {
        try
         {

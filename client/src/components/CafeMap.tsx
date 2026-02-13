@@ -46,7 +46,7 @@ export function CafeMap({ cafes, selectedCafe }: CafeMapProps) {
         zoom={13}
         
       >
-        {/* <TransitLayer /> */}
+        <TransitLayer />
         {cafes.map(cafe => (
           <Marker 
             key={cafe.id} 

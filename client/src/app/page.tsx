@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { fetchCafes } from "@/lib/cafes";
+import { getAllCafes } from "@/lib/cafes";
 import { cafeDTO } from "@/types/cafedto";
 import { Hero } from "@/components/Hero";
 import { FilterChips, FilterType } from "@/components/FilterChips";
@@ -21,13 +21,15 @@ export default function Home() {
   useEffect(() => {
     const loadCafes = async () => {
       try {
-        const data = await fetchCafes();
+        console.log("📍 Starting to fetch cafes...");
+        const data = await getAllCafes();
+        console.log("✅ Cafes loaded:", data);
         setCafes(data);
         setError(null);
       } catch (err) {
+        console.error("❌ Error loading cafes:", err);
         setError("Failed to load cafes");
         toast.error("Failed to load cafes from API");
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -43,7 +45,7 @@ export default function Home() {
       if (activeFilters.includes("outlets") && !cafe.hasOutlets) return false;
       return true;
     });
-  }, [activeFilters]);
+  }, [cafes, activeFilters]);
 
   const handleToggleFilter = useCallback((filter: FilterType) => {
     setActiveFilters((prev) =>
