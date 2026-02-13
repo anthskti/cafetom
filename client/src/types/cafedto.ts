@@ -3,7 +3,7 @@ export interface cafeDTO {
     name: string;
     address: string;
     description: string;
-    studyscore: number;
+    studyScore: number;
     hasWifi: boolean;
     isQuiet: boolean;
     hasOutlets: boolean;

@@ -1,10 +1,10 @@
 import { MapPin } from "lucide-react";
-import { Cafe } from "@/data/cafes";
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { cafeDTO } from "@/types/cafedto";
+import { GoogleMap, TransitLayer, useJsApiLoader, Marker } from '@react-google-maps/api';
 
 interface CafeMapProps {
-  cafes: Cafe[];
-  selectedCafe: Cafe | null;
+  cafes: cafeDTO[];
+  selectedCafe: cafeDTO | null;
 }
 
 
@@ -12,18 +12,41 @@ export function CafeMap({ cafes, selectedCafe }: CafeMapProps) {
   
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_APIKEY as string
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_APIKEY as string,
+    mapIds:['435669960d4240c636b1846d']
   });
 
   if (!isLoaded) return <div>Loading Map...</div>;
 
+  const mapOptions = {
+    mapId: '435669960d4240c636b1846d',
+    disableDefaultUI: true,        
+    zoomControl: true,             
+    mapTypeControl: false,         
+    streetViewControl: false,      
+    fullscreenControl: false,      
+    gestureHandling: "cooperative", // Better UX for long pages
+    restriction: {
+      latLngBounds: {
+        north: 43.99, // Steeles Ave area
+        south: 43.58, // The Lake
+        west: -79.64, // Mississauga border
+        east: -79.12, // Scarborough border
+      },
+      strictBounds: false,
+    },
+  };
+
   return (
-    <section className="relative bg-secondary/50 rounded-3xl overflow-hidden mx-4 md:mx-8 lg:mx-16">
+    <section className="relative bg-secondary/50 rounded-3xl overflow-hidden mx-4 md:mx-6 lg:mx-40">
       <GoogleMap
-        mapContainerStyle={{ width: '100%', height: '400px' }}
+        options={mapOptions}
+        mapContainerStyle={{ width: '100%', height: '600px' }}
         center={{ lat: 43.6532, lng: -79.3832 }}
-        zoom={12}
+        zoom={13}
+        
       >
+        {/* <TransitLayer /> */}
         {cafes.map(cafe => (
           <Marker 
             key={cafe.id} 

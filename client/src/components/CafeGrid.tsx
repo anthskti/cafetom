@@ -1,8 +1,8 @@
-import { Cafe } from "@/data/cafes";
+import { cafeDTO } from "@/types/cafedto";
 import { CafeCard } from "./CafeCard";
 
 interface CafeGridProps {
-  cafes: Cafe[];
+  cafes: cafeDTO[];
 }
 
 export function CafeGrid({ cafes }: CafeGridProps) {

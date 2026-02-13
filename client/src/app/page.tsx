@@ -1,18 +1,40 @@
 "use client"
 import Image from "next/image";
-import { useState, useMemo, useCallback } from "react";
-import { cafes, Cafe } from "@/data/cafes";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { fetchCafes } from "@/lib/cafes";
+import { cafeDTO } from "@/types/cafedto";
 import { Hero } from "@/components/Hero";
 import { FilterChips, FilterType } from "@/components/FilterChips";
 import { CafeMap } from "@/components/CafeMap";
 import { CafeGrid } from "@/components/CafeGrid";
 import { toast } from "sonner";
 
-
+type Cafe = cafeDTO;
 
 export default function Home() {
+  const [cafes, setCafes] = useState<Cafe[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeFilters, setActiveFilters] = useState<FilterType[]>([]);
   const [selectedCafe, setSelectedCafe] = useState<Cafe | null>(null);
+
+  useEffect(() => {
+    const loadCafes = async () => {
+      try {
+        const data = await fetchCafes();
+        setCafes(data);
+        setError(null);
+      } catch (err) {
+        setError("Failed to load cafes");
+        toast.error("Failed to load cafes from API");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadCafes();
+  }, []);
 
   const filteredCafes = useMemo(() => {
     return cafes.filter((cafe) => {
@@ -39,7 +61,7 @@ export default function Home() {
     setSelectedCafe(randomCafe);
     
     toast.success(`Your surprise pick: ${randomCafe.name}`, {
-      description: `${randomCafe.neighborhood} • Study Score: ${randomCafe.studyScore}/5`,
+      description: `${randomCafe.address} • Study Score: ${randomCafe.studyScore}/5`,
       duration: 5000,
     });
 
@@ -51,6 +73,27 @@ export default function Home() {
       });
     }, 100);
   }, [filteredCafes]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-muted-foreground">Loading your study spots...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-destructive">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}

@@ -1,9 +1,9 @@
 import { MapPin, Wifi, Volume2, Plug } from "lucide-react";
-import { Cafe } from "@/data/cafes";
+import { cafeDTO } from "@/types/cafedto";
 import { StudyScore } from "./StudyScore";
 
 interface CafeCardProps {
-  cafe: Cafe;
+  cafe: cafeDTO;
   index: number;
 }
 
@@ -15,7 +15,7 @@ export function CafeCard({ cafe, index }: CafeCardProps) {
     >
       <div className="aspect-4/3 overflow-hidden">
         <img
-          src={cafe.image}
+          src={cafe.imageUrl}
           alt={cafe.name}
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
@@ -29,7 +29,7 @@ export function CafeCard({ cafe, index }: CafeCardProps) {
             </h3>
             <div className="flex items-center gap-1.5 text-muted-foreground text-sm">
               <MapPin className="w-3.5 h-3.5" />
-              {cafe.neighborhood}
+              {cafe.address}
             </div>
           </div>
           
