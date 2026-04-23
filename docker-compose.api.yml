@@ -1,0 +1,12 @@
+services:
+  cafeapi:
+    build:
+      context: ./cafeapi
+      dockerfile: Dockerfile
+    image: cafeapi:latest
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      GOOGLE_APIKEY: ${GOOGLE_APIKEY}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}

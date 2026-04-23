@@ -9,6 +9,7 @@ interface ImageProps {
 
 export const ImageProp = ({ source, alt }: ImageProps) => {
     const [imageError, setImageError] = useState(false);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080/api";
 
     if (!source || imageError) {
         return (
@@ -19,9 +20,7 @@ export const ImageProp = ({ source, alt }: ImageProps) => {
             </div>
         );
     }
-
-    // Use backend endpoint to proxy images (avoids CORS issues)
-    const src = `http://localhost:5105/api/cafes/photo?photoName=${encodeURIComponent(source)}`;
+    const src = `${apiUrl}/cafes/photo?photoName=${encodeURIComponent(source)}`;
 
     return (
         <div className="relative w-full h-full">

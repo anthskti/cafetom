@@ -39,3 +39,47 @@ Program.cs: Like main.py or index.ts
 Controllers/ : Communicates with http request.
 Models/ or DTOs/ : Defined class for objects.
 Data/ : The data, likely just pulled from the Google Place API.
+
+## Docker (Local)
+
+Build and Run API Container
+```bash
+docker compose -f docker-compose.api.yml up --build
+```
+
+Remove Container
+```bash
+docker compose -f docker-compose.api.yml
+```
+
+
+## Docker (Deployment)
+
+Build image:
+```bash
+docker build -t cafeapi:latest ./cafeapi
+```
+
+Run container:
+
+```bash
+docker run --rm -p 8080:8080 \
+  -e ASPNETCORE_ENVIRONMENT=Production \
+  -e GOOGLE_APIKEY=AIzaSyCYGHiBfBXgCGTnexaLF5Hb3-x4o71PBIc \
+  -e CORS_ALLOWED_ORIGINS=cafetom.vercel.app \
+  cafeapi:latest
+```
+```bash
+docker run --rm -p 8080:8080 \
+  -e ASPNETCORE_ENVIRONMENT=Production \
+  -e GOOGLE_APIKEY=your_google_api_key \
+  -e CORS_ALLOWED_ORIGINS=https://your-frontend-domain.com \
+  cafeapi:latest
+```
+
+Using compose from repo root:
+```bash
+export GOOGLE_APIKEY=your_google_api_key
+export CORS_ALLOWED_ORIGINS=https://your-frontend-domain.com
+docker compose -f docker-compose.api.yml up --build -d
+```
