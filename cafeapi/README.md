@@ -65,7 +65,7 @@ Run container:
 ```bash
 docker run --rm -p 8080:8080 \
   -e ASPNETCORE_ENVIRONMENT=Production \
-  -e GOOGLE_APIKEY=AIzaSyCYGHiBfBXgCGTnexaLF5Hb3-x4o71PBIc \
+  -e GOOGLE_APIKEY=... \
   -e CORS_ALLOWED_ORIGINS=cafetom.vercel.app \
   cafeapi:latest
 ```
