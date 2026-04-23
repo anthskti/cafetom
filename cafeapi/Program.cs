@@ -3,7 +3,9 @@ using cafeapi.Services;
 using dotenv.net;
 
 var envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
-DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { envPath }));
+if (File.Exists(envPath)) {
+    DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { envPath }));
+}
 
 var builder = WebApplication.CreateBuilder(args);
 var allowedOrigins = builder.Configuration["CORS_ALLOWED_ORIGINS"]?
